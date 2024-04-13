@@ -56,4 +56,20 @@ public class EmployeeController {
         return "employees/employee-form";
     }
 
+    @GetMapping("/showForDelete")
+    public String showForDelete(@RequestParam("employeeId") int theId, Model model){
+        //get employee from service
+        Employee employee = employeeService.findById(theId);
+
+        model.addAttribute("employee", employee);
+        //use redirection to prevent duplicate submissions with Post/redirect/get pattern
+        return "employees/employee-form";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("employeeId") int theId){
+        employeeService.deleteById(theId);
+        return "redirect:/employees/list";
+    }
+
 }
